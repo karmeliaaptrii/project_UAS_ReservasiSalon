@@ -43,9 +43,32 @@ class Auth
 }
 
     public function login($email, $password)
-    {
+{
+    $query = "SELECT * FROM users WHERE email = :email";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(":email", $email);
+    $stmt->execute();
 
+    if ($stmt->rowCount() > 0) {
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (password_verify($password, $user['password'])) {
+
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['nama'] = $user['nama'];
+            $_SESSION['role'] = $user['role'];
+
+            return true;
+        }
     }
+
+    return false;
+}
 
     public function logout()
     {
