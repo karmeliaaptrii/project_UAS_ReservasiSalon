@@ -12,10 +12,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     if ($auth->login($email, $password)) {
-        header("Location: ../index.php");
+        if ($_SESSION['role'] === 'admin') {
+            header("Location: ../admin/dashboard.php");
+        } else {
+            header("Location: ../customer/dashboard.php");
+        }
+
         exit();
-    } else {
-        $message = "Email atau Password salah!";
     }
 }
 
@@ -47,6 +50,10 @@ if (!empty($message)) {
     <input type="password" name="password" required><br><br>
 
     <button type="submit">Login</button>
+
+    <br>
+
+    <p>Belum punya akun? <a href="register.php">Daftar di sini</a></p>
 
 </form>
 

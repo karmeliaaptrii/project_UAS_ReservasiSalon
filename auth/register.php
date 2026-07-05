@@ -50,6 +50,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <input type="text" id="no_hp" name="no_hp" required><br><br>
 
         <input type="submit" value="Register">
+
+        <br>
+        <p>Sudah punya akun? 
+            <a href="login.php">Login di sini</a></p>
+
     </form>
 
 </body>
