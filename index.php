@@ -1,10 +1,14 @@
 <?php
-session_start();
 
-if (!isset($_SESSION['user_id'])) {
+require_once "classes/Auth.php";
+
+$auth = new Auth();
+
+if (!$auth->isLoggedIn()) {
     header("Location: auth/login.php");
     exit();
 }
+
 ?>
 
 <!DOCTYPE html>

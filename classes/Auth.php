@@ -72,16 +72,32 @@ class Auth
 
     public function logout()
     {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
 
+        session_unset();
+        session_destroy();
+
+        header("Location: login.php");
+        exit();
     }
 
     public function isLoggedIn()
     {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
 
+        return isset($_SESSION['user_id']);
     }
 
     public function hasRole($role)
     {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
 
+        return isset($_SESSION['role']) && $_SESSION['role'] === $role;
     }
 }
